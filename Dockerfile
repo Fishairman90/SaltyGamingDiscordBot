@@ -5,6 +5,9 @@ FROM python:3.10-slim
 # Set the working directory inside the container
 WORKDIR /app
 
+# Install system dependencies for mariadb-python
+RUN apt-get update && apt-get install -y     build-essential     libmariadb3     libmariadb-dev-compat     libssl-dev     && rm -rf /var/lib/apt/lists/*
+
 # Copy the project files into the container
 COPY . /app
 
