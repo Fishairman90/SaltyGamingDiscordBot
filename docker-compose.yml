@@ -1,0 +1,13 @@
+
+version: '3.8'
+
+services:
+  saltygaming-discord-bot:
+    build:
+      context: .
+    container_name: saltygaming-bot
+    volumes:
+      - ./config.json:/app/config.json
+    environment:
+      - DISCORD_TOKEN=your_discord_token
+    restart: always
