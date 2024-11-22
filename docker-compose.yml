@@ -6,8 +6,14 @@ services:
     build:
       context: .
     container_name: saltygaming-bot
-    volumes:
-      - ./config.json:/app/config.json
     environment:
-      - DISCORD_TOKEN=your_discord_token
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DB_DISCORD_HOST=${DB_DISCORD_HOST}
+      - DB_DISCORD_USER=${DB_DISCORD_USER}
+      - DB_DISCORD_PASSWORD=${DB_DISCORD_PASSWORD}
+      - DB_DISCORD_NAME=${DB_DISCORD_NAME}
+      - DB_PERMISSIONS_HOST=${DB_PERMISSIONS_HOST}
+      - DB_PERMISSIONS_USER=${DB_PERMISSIONS_USER}
+      - DB_PERMISSIONS_PASSWORD=${DB_PERMISSIONS_PASSWORD}
+      - DB_PERMISSIONS_NAME=${DB_PERMISSIONS_NAME}
     restart: always
