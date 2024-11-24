@@ -3,14 +3,14 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Copy all project files
+# Copy all project files into the container
 COPY . /app
 
 # Install dependencies
 RUN pip install -r requirements.txt
 
 # Copy default config to a temporary location
-RUN mkdir -p /defaults && cp config.conf /defaults/config.conf
+RUN mkdir -p /defaults && cp /app/config.conf /defaults/config.conf
 
 # Add entrypoint script
 COPY entrypoint.sh /entrypoint.sh

@@ -10,4 +10,4 @@ if [ ! -f /app/config/config.conf ]; then
 fi
 
 # Start the bot
-exec "$@"
+exec python /app/bot.py
