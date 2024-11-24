@@ -6,5 +6,7 @@ services:
     environment:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - DB_PASS=${DB_PASS}
-      - CONFIG_PATH=/app/config
+      - CONFIG_PATH=${CONFIG_PATH}
+    volumes:
+      - ${CONFIG_PATH}:/app/config
     restart: unless-stopped

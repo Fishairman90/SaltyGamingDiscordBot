@@ -9,11 +9,12 @@ COPY . /app
 # Install dependencies
 RUN pip install -r requirements.txt
 
-# Ensure /app/config exists and contains default configuration
-RUN mkdir -p /app/config && cp config.conf /app/config/config.conf
+# Copy default config to a temporary location
+RUN mkdir -p /defaults && cp config.conf /defaults/config.conf
 
-# Expose necessary ports (optional)
-EXPOSE 8080
+# Add entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
-# Run the bot
-CMD ["python", "bot.py"]
+# Set the entrypoint
+ENTRYPOINT ["/entrypoint.sh"]
