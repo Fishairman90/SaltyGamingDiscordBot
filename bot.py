@@ -1,31 +1,26 @@
 import configparser
 
-# Load the .conf file
+# Load the config
 def load_config(file_path='config.conf'):
     config = configparser.ConfigParser()
     config.read(file_path)
     return config
 
-# Load configuration
 config = load_config()
 
-# Access Discord bot token
-bot_token = config['Discord']['bot_token']
+# Check if the bot token is being read
+if 'Discord' not in config or 'bot_token' not in config['Discord']:
+    print("ERROR: 'bot_token' not found in config.conf!")
+else:
+    bot_token = config['Discord']['bot_token']
+    print(f"DEBUG: Loaded bot token: {bot_token[:6]}...")  # Mask for security
 
-# Access database settings
-db_host = config['Database']['host']
-db_user = config['Database']['user']
-db_password = config['Database']['password']
-
-# Access role-to-group mapping
-role_to_group_map = dict(config.items('RoleToGroupMap'))
-
-# Function to get group for a role ID
-def get_group_for_role(role_id):
-    return role_to_group_map.get(role_id, None)
-
-# Example: test output for a role
-test_role_id = "1050611380086112326"
-print(f"Group for role {test_role_id}: {get_group_for_role(test_role_id)}")
-
-# Additional bot logic goes here...
+# Example placeholder logic for bot functionality
+try:
+    print("DEBUG: Attempting to log in...")
+    # Replace with actual bot initialization code, e.g., discord.Client().run(bot_token)
+    if not bot_token or bot_token == "your_discord_bot_token_here":
+        raise ValueError("Improper token has been passed")
+    print("INFO: Logged in successfully (placeholder)")
+except Exception as e:
+    print(f"ERROR - Error running the bot: {e}")
