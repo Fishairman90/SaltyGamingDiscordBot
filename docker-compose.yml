@@ -1,7 +1,8 @@
 services:
   saltygaming-bot:
-    image: saltygamingdiscordbot:latest
-    container_name: saltygaming-bot
+    build:
+      context: .
+    container_name: saltygamingdiscordbot
     environment:
       - DISCORD_TOKEN=${DISCORD_TOKEN}
       - DB_PASS=${DB_PASS}
