@@ -1,4 +1,3 @@
-discord.py
-mariadb
-colorama
-pyfiglet
+discord.py==2.2.3
+mysql-connector-python==8.0.33
+configparser

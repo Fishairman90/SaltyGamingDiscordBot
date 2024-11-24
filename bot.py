@@ -1,64 +1,27 @@
-
-import os
-import discord
-from discord.ext import commands
+import configparser
 import logging
 
-# Set up logging
-logging.basicConfig(level=logging.DEBUG, format='%(asctime)s - %(levelname)s - %(message)s')
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 
-# Read environment variables
-TOKEN = os.getenv("DISCORD_TOKEN")
-DB_CONFIG_ARK_DISCORD = {
-    "host": os.getenv("DB_DISCORD_HOST"),
-    "user": os.getenv("DB_DISCORD_USER"),
-    "password": os.getenv("DB_DISCORD_PASSWORD"),
-    "database": os.getenv("DB_DISCORD_NAME"),
-}
-DB_CONFIG_ARK_PERMISSIONS = {
-    "host": os.getenv("DB_PERMISSIONS_HOST"),
-    "user": os.getenv("DB_PERMISSIONS_USER"),
-    "password": os.getenv("DB_PERMISSIONS_PASSWORD"),
-    "database": os.getenv("DB_PERMISSIONS_NAME"),
-}
+# Initialize configparser
+config = configparser.ConfigParser()
+config.read('config.conf')
 
-# Role-to-permission mapping
-ROLE_TO_GROUP_MAP = {
-    "123456789012345678": "Admin",
-    "987654321098765432": "Moderator"
-}
+# Extract configuration
+discord_token = config['Discord']['Token']
+db_host = config['Database']['Host']
+db_user = config['Database']['User']
+db_pass = config['Database']['Password']
+db_name = config['Database']['Name']
 
-# Initialize bot with intents
-intents = discord.Intents.default()
-intents.members = True
-intents.guilds = True
+# Role mappings
+role_mappings = {key: value for key, value in config['RoleMappings'].items()}
 
-bot = commands.Bot(command_prefix="!", intents=intents)
+# Example: Logging loaded configuration (hide sensitive info in production)
+logging.info(f"Discord token loaded: {'*' * len(discord_token)}")
+logging.info(f"Database host: {db_host}")
+logging.info(f"Role mappings: {role_mappings}")
 
-@bot.event
-async def on_ready():
-    logging.info(f"Bot logged in as {bot.user}")
-    for guild in bot.guilds:
-        logging.info(f"Connected to guild: {guild.name} with {len(guild.members)} members")
-
-@bot.event
-async def on_member_update(before, after):
-    if before.roles != after.roles:
-        logging.info(f"Role change detected for {after.name}")
-        added_roles = [role.name for role in after.roles if role not in before.roles]
-        removed_roles = [role.name for role in before.roles if role not in after.roles]
-        logging.info(f"Added roles: {added_roles}")
-        logging.info(f"Removed roles: {removed_roles}")
-        # Add further handling logic here
-
-@bot.command()
-async def test(ctx):
-    guild = ctx.guild
-    members = guild.members
-    for member in members:
-        logging.info(f"{member.name}: {[role.name for role in member.roles]}")
-
-try:
-    bot.run(TOKEN)
-except Exception as e:
-    logging.error(f"Error running the bot: {e}")
+# Add your bot's logic below, using the loaded configuration.
+# Example: Connect to Discord and database.

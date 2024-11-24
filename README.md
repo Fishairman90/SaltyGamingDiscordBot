@@ -1,53 +1,40 @@
-
-# Salty Gaming Discord Bot
-
-A Discord bot to sync roles with Ark Survival Ascended in-game permissions using a MySQL database.
-
-## Features
-- Sync Discord roles with in-game permissions.
-- Add/remove permissions dynamically based on role changes.
-- Dockerized for easy deployment.
-
-## Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/salty_gaming_discord_bot.git
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Add your configuration in `config.json`.
-
-4. Run the bot:
-   ```bash
-   python bot.py
-   ```
-
-### Docker Setup
-1. Build the Docker image:
-   ```bash
-   docker build -t saltygaming-discord-bot .
-   ```
-
-2. Run the container:
-   ```bash
-   docker run -d --name saltygaming-bot saltygaming-discord-bot
-   ```
+# SaltyGamingDiscordBot
 
 ## Configuration
-- Update `config.json` with:
-  - Your Discord bot token.
-  - Database credentials for Ark Discord and Ark Permissions databases.
-  - Role-to-permission mapping.
 
----
+The bot now uses a `.conf` file for configuration. An example file is provided below:
 
-### Contributing
-Contributions are welcome! Please submit a pull request with your changes.
+### Example `config.conf`:
+```ini
+[Discord]
+Token = your-discord-bot-token
 
-### License
-MIT
+[Database]
+Host = your-database-host
+User = your-database-user
+Password = your-database-password
+Name = your-database-name
+
+[RoleMappings]
+HappyBirthday = birthday_permission_group
+Moderator = mod_permission_group
+Admin = admin_permission_group
+```
+
+### Setup Instructions
+
+1. Copy `config.conf.example` to `config.conf`.
+2. Edit `config.conf` with your credentials and role mappings.
+3. Mount the file in Docker or place it in the project root.
+
+## Running the Bot with Docker
+
+### Build the Docker Image:
+```bash
+docker build -t saltygamingdiscordbot:latest .
+```
+
+### Run the Container:
+```bash
+docker run -d --name saltygaming-bot -v /path/to/config.conf:/app/config.conf saltygamingdiscordbot:latest
+```
