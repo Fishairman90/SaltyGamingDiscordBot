@@ -1,4 +1,2 @@
 discord.py
-mariadb
-colorama
-pyfiglet
+mysql-connector-python

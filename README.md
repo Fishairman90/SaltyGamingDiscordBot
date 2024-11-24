@@ -1,53 +1,50 @@
-
 # Salty Gaming Discord Bot
 
-A Discord bot to sync roles with Ark Survival Ascended in-game permissions using a MySQL database.
-
-## Features
-- Sync Discord roles with in-game permissions.
-- Add/remove permissions dynamically based on role changes.
-- Dockerized for easy deployment.
-
-## Setup Instructions
-
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/salty_gaming_discord_bot.git
-   ```
-
-2. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-3. Add your configuration in `config.json`.
-
-4. Run the bot:
-   ```bash
-   python bot.py
-   ```
-
-### Docker Setup
-1. Build the Docker image:
-   ```bash
-   docker build -t saltygaming-discord-bot .
-   ```
-
-2. Run the container:
-   ```bash
-   docker run -d --name saltygaming-bot saltygaming-discord-bot
-   ```
+## Overview
+The Salty Gaming Discord Bot synchronizes Discord roles with in-game permissions for Ark: Survival Ascended. It now uses a `.conf` file for configuration.
 
 ## Configuration
-- Update `config.json` with:
-  - Your Discord bot token.
-  - Database credentials for Ark Discord and Ark Permissions databases.
-  - Role-to-permission mapping.
 
----
+1. **Edit the Configuration File**:
+   Locate the `config.conf` file and edit the following sections:
+   - `[Discord]`: Add your bot token.
+   - `[Database]`: Add your database credentials.
+   - `[RoleToGroupMap]`: Map Discord role IDs to in-game group names.
 
-### Contributing
-Contributions are welcome! Please submit a pull request with your changes.
+   Example:
+   ```ini
+   [Discord]
+   bot_token = your_discord_bot_token_here
 
-### License
-MIT
+   [Database]
+   host = localhost
+   user = root
+   password = password
+
+   [RoleToGroupMap]
+   809576516068704267 = Birthday
+   842104928855523339 = Nitro
+   ```
+
+2. **Run the Bot**:
+   Build and run the bot using Docker:
+   ```bash
+   docker build -t saltygaming-discord-bot .
+   docker run -d --name saltygaming-bot \
+       -v /path/to/local/config.conf:/app/config.conf \
+       saltygaming-discord-bot
+   ```
+
+3. **Restart After Changes**:
+   If you edit `config.conf`, restart the bot:
+   ```bash
+   docker restart saltygaming-bot
+   ```
+
+## Features
+- Synchronizes Discord roles with in-game permissions.
+- Easy-to-edit `.conf` file for all configuration.
+- Dockerized for streamlined deployment.
+
+## Contributing
+Feel free to contribute by submitting pull requests or opening issues on GitHub.
