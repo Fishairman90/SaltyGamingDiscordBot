@@ -1,20 +1,26 @@
+
+# Use the official Python image as the base
 FROM python:3.10-slim
 
-# Set working directory
+# Set the working directory inside the container
 WORKDIR /app
 
-# Copy all project files into the container
+# Install system dependencies for mariadb-python and debugging
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libmariadb3 \
+    libmariadb-dev-compat \
+    libssl-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy the project files into the container
 COPY . /app
 
-# Install dependencies
-RUN pip install -r requirements.txt
+# Install the required Python packages
+RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy default config to a temporary location
-RUN mkdir -p /defaults && cp /app/config.conf /defaults/config.conf
+# Set environment variable to disable buffering for real-time logs
+ENV PYTHONUNBUFFERED=1
 
-# Add entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-# Set the entrypoint
-ENTRYPOINT ["/entrypoint.sh"]
+# Run the bot script
+CMD ["python", "bot.py"]
