@@ -4,6 +4,6 @@ services:
     container_name: saltygaming-bot
     restart: unless-stopped
     volumes:
-      - ./config.json:/app/config.json
+      - ./config.json:/app/config.json  # Ensure proper file mapping
     ports:
       - "8081:8080"  # Changed host port to avoid conflict
