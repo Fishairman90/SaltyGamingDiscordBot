@@ -3,17 +3,14 @@ FROM python:3.10-slim
 # Set working directory
 WORKDIR /app
 
-# Copy project files to the container
+# Copy all project files
 COPY . /app
-
-# Ensure the config directory exists
-RUN mkdir -p /app/config
-
-# Copy default configuration files to the config directory
-COPY config.conf /app/config/config.conf
 
 # Install dependencies
 RUN pip install -r requirements.txt
+
+# Ensure /app/config exists and contains default configuration
+RUN mkdir -p /app/config && cp config.conf /app/config/config.conf
 
 # Expose necessary ports (optional)
 EXPOSE 8080
