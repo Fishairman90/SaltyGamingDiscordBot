@@ -1,0 +1,11 @@
+version: "3.8"
+services:
+  saltygaming-bot:
+    image: saltygamingdiscordbot:latest
+    container_name: saltygaming-bot
+    environment:
+      - DISCORD_TOKEN=${DISCORD_TOKEN}
+      - DB_PASS=${DB_PASS}
+    volumes:
+      - ${CONFIG_PATH}:/app/config
+    restart: unless-stopped
