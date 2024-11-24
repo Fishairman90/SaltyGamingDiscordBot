@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  saltygamingbot:
+    build: .
+    container_name: saltygaming-bot
+    restart: unless-stopped
+    volumes:
+      - ./config.json:/app/config.json
+    ports:
+      - "8080:8080"
