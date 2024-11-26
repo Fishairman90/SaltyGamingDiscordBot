@@ -1,11 +1,14 @@
-version: "3.8"
-
 services:
   saltygamingdiscordbot:
     build: .
     container_name: saltygamingdiscordbot
-    env_file:
-      - .env
+    environment:
+      - DISCORD_TOKEN=your_discord_token
+      - MYSQL_HOST=192.168.1.6
+      - MYSQL_USER=ark
+      - MYSQL_PASSWORD=your_mysql_password
+      - ARK_DISCORD_DB=ark_discord
+      - ARK_ASA_PERMISSIONS_DB=ark_asa_permissions
     networks:
       - docker_network
     restart: unless-stopped
