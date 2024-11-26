@@ -5,7 +5,7 @@ import json
 import os
 
 # Load configuration
-CONFIG_PATH = os.getenv("CONFIG_PATH", "config.json")
+CONFIG_PATH = "/app/config.json"  # Explicit path to config.json
 try:
     with open(CONFIG_PATH, 'r') as config_file:
         config = json.load(config_file)
@@ -20,6 +20,11 @@ print(f"Loaded configuration: {config}")
 TOKEN = config.get("DISCORD_TOKEN")
 if not TOKEN:
     raise ValueError("DISCORD_TOKEN is missing or invalid in config.json")
+
+# Debug: Ensure TOKEN is a string
+print(f"Type of TOKEN: {type(TOKEN)}")
+if not isinstance(TOKEN, str):
+    raise TypeError(f"Expected TOKEN to be a str, got {type(TOKEN).__name__} instead")
 
 print(f"Discord Token Loaded: {TOKEN[:10]}...")  # Debug token (partial)
 
