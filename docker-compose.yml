@@ -2,8 +2,6 @@ services:
   saltygamingdiscordbot:
     build: .
     container_name: saltygamingdiscordbot
-    volumes:
-      - ./config.json:/app/config.json  # Mount the config.json file
     networks:
       - docker_network
     restart: unless-stopped
