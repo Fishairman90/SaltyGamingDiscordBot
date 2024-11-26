@@ -1,0 +1,15 @@
+version: "3.8"
+
+services:
+  saltygamingdiscordbot:
+    build: .
+    container_name: saltygamingdiscordbot
+    env_file:
+      - .env
+    networks:
+      - docker_network
+    restart: unless-stopped
+
+networks:
+  docker_network:
+    external: true
