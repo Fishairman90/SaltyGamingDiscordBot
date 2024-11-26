@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY bot.py .
 COPY requirements.txt .
-COPY .env .  # Ensure the .env file is copied
+COPY config.json .
 
 RUN pip install -r requirements.txt
 
