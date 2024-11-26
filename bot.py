@@ -1,38 +1,22 @@
 import discord
 from discord.ext import commands
 import pymysql
-import json
 import os
 
-# Load configuration
-CONFIG_PATH = "/app/config.json"  # Explicit path to config.json
-try:
-    with open(CONFIG_PATH, 'r') as config_file:
-        config = json.load(config_file)
-except FileNotFoundError:
-    raise FileNotFoundError(f"Configuration file not found at {CONFIG_PATH}")
-except json.JSONDecodeError:
-    raise ValueError(f"Invalid JSON format in configuration file: {CONFIG_PATH}")
-
-# Debugging: Print loaded config (avoid printing sensitive values in production)
-print(f"Loaded configuration: {config}")
-
-TOKEN = config.get("DISCORD_TOKEN")
+# Load configuration from environment variables
+TOKEN = os.getenv("DISCORD_TOKEN")
 if not TOKEN:
-    raise ValueError("DISCORD_TOKEN is missing or invalid in config.json")
+    raise ValueError("DISCORD_TOKEN environment variable is missing or invalid.")
 
-# Debug: Ensure TOKEN is a string
-print(f"Type of TOKEN: {type(TOKEN)}")
-if not isinstance(TOKEN, str):
-    raise TypeError(f"Expected TOKEN to be a str, got {type(TOKEN).__name__} instead")
+MYSQL_HOST = os.getenv("MYSQL_HOST", "127.0.0.1")
+MYSQL_USER = os.getenv("MYSQL_USER", "root")
+MYSQL_PASSWORD = os.getenv("MYSQL_PASSWORD", "")
+ARK_DISCORD_DB = os.getenv("ARK_DISCORD_DB", "ark_discord")
+ARK_ASA_PERMISSIONS_DB = os.getenv("ARK_ASA_PERMISSIONS_DB", "ark_asa_permissions")
 
-print(f"Discord Token Loaded: {TOKEN[:10]}...")  # Debug token (partial)
-
-MYSQL_HOST = config["MYSQL_HOST"]
-MYSQL_USER = config["MYSQL_USER"]
-MYSQL_PASSWORD = config["MYSQL_PASSWORD"]
-ARK_DISCORD_DB = config["ARK_DISCORD_DB"]
-ARK_ASA_PERMISSIONS_DB = config["ARK_ASA_PERMISSIONS_DB"]
+# Debug: Print loaded token type and partial value
+print(f"Discord Token Loaded: {TOKEN[:10]}...")  # Avoid exposing full token
+print(f"Token type: {type(TOKEN)}")
 
 # Discord setup
 intents = discord.Intents.default()
